@@ -79,3 +79,12 @@ curl -X POST http://192.168.49.2:32620/counter -H "Content-Type: application/jso
 # → {"counter":X}
 
 curl http://192.168.49.2:32620/metrics
+## Sécurité
+
+- **SAST** : Bandit intégré dans le pipeline GitHub Actions (scan statique du code Python).
+- **DAST** : Scan dynamique OWASP ZAP (baseline mode) contre l'API locale.
+  - Outil : ghcr.io/zaproxy/zaproxy:stable
+  - Cible : http://172.17.0.1:5000
+  - Résultat : **0 alertes High/Medium**, **4 alertes Low** (Server header leak, CSP missing, Permissions-Policy missing, Cacheable content).
+  - Rapport complet : [security/zap/zap-report.html](security/zap/zap-report.html)
+  - Conclusion : API simple, surface d'attaque réduite, aucun risque critique détecté.
